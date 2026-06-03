@@ -1,0 +1,281 @@
+# Workshop — Mổ App AI Thật
+
+## Sản phẩm được chọn
+
+**V-App — V-AI**
+
+### AI Feature
+- Trợ lý AI bằng text/voice
+- Trả lời câu hỏi
+- Gợi ý thông tin theo ngữ cảnh
+
+---
+
+# 1. Promise vs Reality
+
+## Product Promise
+
+V-AI hứa giúp người dùng:
+
+- Hỏi đáp tự nhiên bằng ngôn ngữ thường ngày.
+- Tìm thông tin nhanh hơn.
+- Nhận hỗ trợ cá nhân hóa theo nhu cầu.
+
+## User được hứa sẽ được giúp
+
+- Sinh viên
+- Người mới học công nghệ
+- Người cần tìm thông tin trong hệ sinh thái V-App
+
+## Kỳ vọng
+
+Tôi kỳ vọng AI có thể:
+
+- Hiểu mục tiêu học tập.
+- Đưa ra hướng dẫn phù hợp với từng người.
+- Giảm thời gian tìm kiếm thông tin.
+
+## Reality
+
+Khi dùng thử với prompt:
+
+> "Tôi là sinh viên năm nhất CNTT, muốn học AI thì bắt đầu từ đâu?"
+
+AI đưa ra danh sách kiến thức khá dài:
+
+- Python
+- Machine Learning
+- Deep Learning
+- Data Science
+
+Tuy nhiên AI không hỏi thêm:
+
+- Trình độ hiện tại
+- Thời gian học
+- Mục tiêu nghề nghiệp
+
+Kết quả:
+
+Người dùng nhận được nhiều thông tin nhưng chưa biết hành động đầu tiên là gì.
+
+---
+
+# 2. Evidence
+
+## Input đã thử
+
+Prompt:
+
+> "Tôi là sinh viên năm nhất CNTT, muốn học AI thì bắt đầu từ đâu?"
+
+## Observation
+
+AI trả lời trực tiếp ngay lập tức.
+
+Không có bước xác minh:
+
+- trình độ
+- mục tiêu
+- bối cảnh người dùng
+
+## Hành vi quan sát được
+
+Flow hiện tại:
+
+User hỏi  
+↓  
+AI trả lời  
+↓  
+Kết thúc
+
+Trong khi câu hỏi mang tính tư vấn thường cần thêm ngữ cảnh trước khi đưa ra lời khuyên.
+
+---
+
+# 3. Four Paths
+
+## Happy Path
+
+User hỏi rõ ràng:
+
+> "Lịch học khóa AI thực chiến ở đâu?"
+
+Flow:
+
+User hỏi  
+↓  
+AI hiểu đúng  
+↓  
+AI trả lời  
+↓  
+User nhận được thông tin
+
+Kết quả:
+
+User hoàn thành nhiệm vụ.
+
+---
+
+## Low-confidence Path
+
+User hỏi:
+
+> "Em nên học gì?"
+
+AI không đủ thông tin.
+
+Hiện tại:
+
+AI vẫn trả lời ngay.
+
+Không có:
+
+- câu hỏi làm rõ
+- lựa chọn để user chọn
+- cảnh báo confidence thấp
+
+Kết quả:
+
+Khả năng trả lời sai hướng cao.
+
+---
+
+## Failure Path
+
+User hỏi:
+
+> "Em muốn làm AI Engineer."
+
+AI giả định user đã có nền tảng lập trình.
+
+AI đề xuất:
+
+- Deep Learning
+- Transformer
+- LLM
+
+Trong khi user là người mới hoàn toàn.
+
+Kết quả:
+
+User bị quá tải và không biết bắt đầu từ đâu.
+
+---
+
+## Correction Path
+
+Khi AI trả lời sai:
+
+User phải tự nhập lại câu hỏi.
+
+Ví dụ:
+
+> "Em chưa biết Python."
+
+AI tạo câu trả lời mới.
+
+Tuy nhiên:
+
+- Không thấy AI ghi nhận correction.
+- Không có log hiển thị cho người dùng.
+- Không có cơ chế học từ phản hồi.
+
+---
+
+# 4. Finding
+
+## Finding
+
+Khi user hỏi các câu mang tính tư vấn mở như:
+
+> "Em nên học AI như thế nào?"
+
+AI trả lời trực tiếp dù chưa đủ ngữ cảnh.
+
+### Hậu quả
+
+- Lời khuyên dễ sai hướng.
+- User bị quá tải thông tin.
+- User khó chuyển từ đọc sang hành động.
+
+### Lỗi thuộc layer
+
+**Intent Understanding + UX Recovery**
+
+---
+
+# 5. Product Decision
+
+## Requirement
+
+Nếu confidence thấp hoặc thiếu context quan trọng,
+
+AI không được trả lời ngay.
+
+Bắt buộc chuyển sang chế độ Clarification.
+
+Ví dụ:
+
+AI hỏi:
+
+1. Bạn đã biết Python chưa?
+2. Mục tiêu của bạn là gì?
+3. Bạn có bao nhiêu giờ học mỗi tuần?
+
+Sau khi thu thập đủ thông tin:
+
+AI mới sinh roadmap.
+
+---
+
+# 6. Sketch
+
+## AS-IS
+
+User hỏi  
+↓  
+AI trả lời ngay  
+↓  
+Có thể sai hướng  
+↓  
+User phải tự hỏi lại
+
+**Điểm gãy:** thiếu bước làm rõ.
+
+---
+
+## TO-BE
+
+User hỏi  
+↓  
+AI đánh giá confidence  
+↓  
+Confidence thấp?  
+↓  
+Có  
+↓  
+Hỏi thêm 2-3 câu  
+↓  
+Thu thập context  
+↓  
+Sinh câu trả lời cá nhân hóa  
+↓  
+User hành động
+
+---
+
+# 7. SPEC Impact
+
+Finding này dẫn đến thay đổi trong SPEC:
+
+**Thêm Clarification Flow.**
+
+### Rule
+
+Nếu thiếu context quan trọng, AI phải hỏi lại trước khi đưa ra khuyến nghị.
+
+### Mục tiêu
+
+- Tăng độ chính xác
+- Tăng tính cá nhân hóa
+- Giảm tỷ lệ user bỏ cuộc
